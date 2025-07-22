@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VXA Velaxa Exchange | Next-Gen Digital Asset Trading</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vxaBlue: '#0066FF',
+                        vxaDark: '#0F172A',
+                        vxaAccent: '#00F0FF',
+                        vxaPurple: '#7B61FF',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #0066FF 0%, #00F0FF 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0066FF 0%, #7B61FF 100%);
+        }
+        
+        .glow {
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 240, 255, 0.1), 0 10px 10px -5px rgba(0, 240, 255, 0.04);
+        }
+        
+        .trading-view {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stats-card {
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .nav-link:hover {
+            color: #00F0FF;
+        }
+        
+        .token-card {
+            transition: all 0.3s ease;
+        }
+        
+        .token-card:hover {
+            transform: scale(1.05);
+            background: rgba(0, 102, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-vxaDark/90 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="h-8 w-8 rounded-full gradient-bg flex items-center justify-center">
+                            <span class="font-bold text-white">VXA</span>
+                        </div>
+                        <span class="ml-2 text-xl font-bold">Velaxa</span>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-8">
+                            <a href="#" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Products</a>
+                            <a href="#" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Markets</a>
+                            <a href="#" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Trade</a>
+                            <a href="#" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Institutional</a>
+                            <a href="#" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-4 flex items-center md:ml-6">
+                        <button class="bg-vxaBlue hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium mr-4">
+                            Sign Up
+                        </button>
+                        <button class="border border-vxaBlue text-vxaBlue px-4 py-2 rounded-md text-sm font-medium">
+                            Login
+                        </button>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" class="nav-link text-white block px-3 py-2 rounded-md text-base font-medium">Products</a>
+                <a href="#" class="nav-link text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Markets</a>
+                <a href="#" class="nav-link text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Trade</a>
+                <a href="#" class="nav-link text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Institutional</a>
+                <a href="#" class="nav-link text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About</a>
+            </div>
+            <div class="pt-4 pb-3 border-t border-gray-800">
+                <div class="flex items-center px-5 space-x-4">
+                    <button class="bg-vxaBlue hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium w-full">
+                        Sign Up
+                    </button>
+                    <button class="border border-vxaBlue text-vxaBlue px-4 py-2 rounded-md text-sm font-medium w-full">
+                        Login
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Founder Section -->
+    <div class="pt-24 pb-20 sm:pt-32 sm:pb-28 lg:pt-40 lg:pb-32 relative overflow-hidden bg-gradient-to-b from-vxaDark to-gray-900">
+        <div class="absolute inset-0 -z-10">
+            <div class="absolute inset-0 bg-[radial-gradient(#0066FF_1px,transparent_1px)] [background-size:16px_16px] opacity-10"></div>
+            <div class="absolute left-[50%] top-0 h-[500px] w-[500px] rounded-full bg-vxaBlue opacity-20 blur-[100px]"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-base text-vxaBlue font-semibold tracking-wide uppercase">创始团队</h2>
+                <h1 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">
+                    <span class="gradient-text">华尔街精英</span>与加密先锋的完美结合
+                </h1>
+                <p class="mt-4 max-w-2xl text-xl text-gray-400 mx-auto">
+                    VXA Velaxa由传统金融与区块链领域的顶尖专家共同创立，融合百年华尔街经验与前沿加密技术
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-16 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Founder 1 -->
+                <div class="text-center">
+                    <div class="relative mx-auto h-40 w-40 rounded-full overflow-hidden border-4 border-vxaBlue mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen" class="h-full w-full object-cover">
+                        <div class="absolute inset-0 bg-vxaBlue/20"></div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Michael Chen</h3>
+                    <p class="text-vxaBlue font-medium">联合创始人兼CEO</p>
+                    <p class="mt-3 text-gray-400">
+                        前高盛亚洲区董事总经理，15年华尔街金融衍生品专家，斯坦福大学金融工程博士
+                    </p>
+                    <div class="mt-4 flex justify-center space-x-4">
+                        <a href="#" class="text-gray-500 hover:text-vxaBlue">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Founder 2 -->
+                <div class="text-center">
+                    <div class="relative mx-auto h-40 w-40 rounded-full overflow-hidden border-4 border-vxaPurple mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Johnson" class="h-full w-full object-cover">
+                        <div class="absolute inset-0 bg-vxaPurple/20"></div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Sarah Johnson</h3>
+                    <p class="text-vxaPurple font-medium">首席技术官</p>
+                    <p class="mt-3 text-gray-400">
+                        前Coinbase核心架构师，以太坊早期开发者，MIT计算机科学博士
+                    </p>
+                    <div class="mt-4 flex justify-center space-x-4">
+                        <a href="#" class="text-gray-500 hover:text-vxaPurple">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Founder 3 -->
+                <div class="text-center">
+                    <div class="relative mx-auto h-40 w-40 rounded-full overflow-hidden border-4 border-vxaAccent mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="David Zhang" class="h-full w-full object-cover">
+                        <div class="absolute inset-0 bg-vxaAccent/20"></div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">David Zhang</h3>
+                    <p class="text-vxaAccent font-medium">首席运营官</p>
+                    <p class="mt-3 text-gray-400">
+                        前Binance亚太区负责人，连续创业者，数字货币合规专家
+                    </p>
+                    <div class="mt-4 flex justify-center space-x-4">
+                        <a href="#" class="text-gray-500 hover:text-vxaAccent">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Company History -->
+    <div class="py-20 bg-vxaDark relative overflow-hidden">
+        <div class="absolute left-[20%] top-[30%] h-[300px] w-[300px] rounded-full bg-vxaAccent opacity-20 blur-[80px]"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+                <div class="lg:col-span-5">
+                    <h2 class="text-base text-vxaBlue font-semibold tracking-wide uppercase">我们的故事</h2>
+                    <h1 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">
+                        VXA <span class="gradient-text">发展历程</span>
+                    </h1>
+                    <p class="mt-4 text-lg text-gray-400">
+                        从华尔街会议室到加密世界的革命性平台，VXA正在重新定义数字资产交易的标准
+                    </p>
+                </div>
+                
+                <div class="mt-10 lg:mt-0 lg:col-span-7">
+                    <div class="space-y-10">
+                        <!-- Timeline Item 1 -->
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 top-0 h-6 w-6 rounded-full bg-vxaBlue flex items-center justify-center">
+                                <div class="h-2 w-2 rounded-full bg-white"></div>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">2018年 · 构想诞生</h3>
+                            <p class="mt-2 text-gray-400">
+                                Michael与Sarah在纽约共识大会相识，共同构思将传统金融市场基础设施引入加密世界
+                            </p>
+                        </div>
+                        
+                        <!-- Timeline Item 2 -->
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 top-0 h-6 w-6 rounded-full bg-vxaPurple flex items-center justify-center">
+                                <div class="h-2 w-2 rounded-full bg-white"></div>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">2019年 · 获得种子轮融资</h3>
+                            <p class="mt-2 text-gray-400">
+                                获得a16z、红杉资本等顶级风投1500万美元投资，组建核心开发团队
+                            </p>
+                        </div>
+                        
+                        <!-- Timeline Item 3 -->
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 top-0 h-6 w-6 rounded-full bg-vxaAccent flex items-center justify-center">
+                                <div class="h-2 w-2 rounded-full bg-white"></div>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">2021年 · 测试网上线</h3>
+                            <p class="mt-2 text-gray-400">
+                                推出全球首个支持机构级API的交易引擎，处理速度达到每秒百万级订单
+                            </p>
+                        </div>
+                        
+                        <!-- Timeline Item 4 -->
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 top-0 h-6 w-6 rounded-full bg-green-500 flex items-center justify-center">
+                                <div class="h-2 w-2 rounded-full bg-white"></div>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">2023年 · 正式发布</h3>
+                            <p class="mt-2 text-gray-400">
+                                获得美国MSB牌照，正式面向全球机构和个人投资者开放交易服务
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <div class="mt-8 sm:mt-12 sm:flex sm:justify-center lg:justify-start">
+                            <div class="rounded-md shadow">
+                                <a href="#" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-vxaBlue hover:bg-blue-700 md:py-4 md:text-lg md:px-10">
+                                    Get Started
+                                </a>
+                            </div>
+                            <div class="mt-3 sm:mt-0 sm:ml-3">
+                                <a href="#" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-vxaBlue bg-white hover:bg-gray-100 md:py-4 md:text-lg md:px-10">
+                                    Learn More
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
+                    <div class="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
+                        <div class="trading-view rounded-xl overflow-hidden w-full h-96">
+                            <div class="flex items-center justify-between p-4 border-b border-gray-800">
+                                <div class="flex items-center space-x-2">
+                                    <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="BTC" class="h-6 w-6">
+                                    <span class="font-medium">BTC/USDT</span>
+                                    <span class="text-green-400 text-sm">+2.34%</span>
+                                </div>
+                                <div class="flex space-x-4">
+                                    <button class="text-gray-400 hover:text-white">
+                                        <i class="fas fa-chart-line"></i>
+                                    </button>
+                                    <button class="text-gray-400 hover:text-white">
+                                        <i class="fas fa-cog"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="flex justify-between items-center mb-4">
+                                    <div>
+                                        <div class="text-2xl font-bold">$42,876.23</div>
+                                        <div class="text-green-400 text-sm">24h High: $43,210.45</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-gray-400 text-sm">24h Volume</div>
+                                        <div class="font-medium">$1.24B</div>
+                                    </div>
+                                </div>
+                                <!-- Price chart placeholder -->
+                                <div class="bg-gray-800 rounded-lg h-48 mb-4 flex items-center justify-center">
+                                    <div class="text-gray-500">Live price chart</div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <button class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">
+                                        Buy
+                                    </button>
+                                    <button class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">
+                                        Sell
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="bg-vxaDark py-12 sm:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="text-base text-vxaBlue font-semibold tracking-wide uppercase">Trusted Globally</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">
+                    Why traders choose VXA Velaxa
+                </p>
+            </div>
+            
+            <div class="mt-10">
+                <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                    <div class="stats-card p-6 rounded-xl">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-vxaBlue/10 rounded-lg p-3">
+                                <i class="fas fa-bolt text-vxaBlue text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-2xl font-bold text-white">2M+</h3>
+                                <p class="mt-1 text-gray-400">Active Traders</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-card p-6 rounded-xl">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-vxaPurple/10 rounded-lg p-3">
+                                <i class="fas fa-exchange-alt text-vxaPurple text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-2xl font-bold text-white">$15B+</h3>
+                                <p class="mt-1 text-gray-400">Daily Volume</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-card p-6 rounded-xl">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-vxaAccent/10 rounded-lg p-3">
+                                <i class="fas fa-coins text-vxaAccent text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h class="text-2xl font-bold text-white">250+</h3>
+                                <p class="mt-1 text-gray-400">Trading Pairs</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-card p-6 rounded-xl">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-green-500/10 rounded-lg p-3">
+                                <i class="fas fa-shield-alt text-green-500 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-2xl font-bold text-white">0</h3>
+                                <p class="mt-1 text-gray-400">Security Breaches</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="py-12 sm:py-16 lg:py-20 bg-vxaDark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="text-base text-vxaBlue font-semibold tracking-wide uppercase">Features</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">
+                    Institutional-Grade Trading Platform
+                </p>
+                <p class="mt-4 max-w-2xl text-xl text-gray-400 lg:mx-auto">
+                    Built for professional traders and institutions with powerful tools and ultra-low latency.
+                </p>
+            </div>
+            
+            <div class="mt-16">
+                <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="feature-card bg-gray-900 p-8 rounded-xl transition-all duration-300">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-vxaBlue/10 text-vxaBlue">
+                            <i class="fas fa-tachometer-alt text-xl"></i>
+                        </div>
+                        <div class="mt-5">
+                            <h3 class="text-lg font-medium text-white">Ultra-Low Latency</h3>
+                            <p class="mt-2 text-base text-gray-400">
+                                Our matching engine processes millions of transactions per second with sub-millisecond latency.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-gray-900 p-8 rounded-xl transition-all duration-300">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-vxaPurple/10 text-vxaPurple">
+                            <i class="fas fa-lock text-xl"></i>
+                        </div>
+                        <div class="mt-5">
+                            <h3 class="text-lg font-medium text-white">Military-Grade Security</h3>
+                            <p class="mt-2 text-base text-gray-400">
+                                Multi-signature cold wallets, two-factor authentication, and institutional-grade security protocols.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-gray-900 p-8 rounded-xl transition-all duration-300">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-vxaAccent/10 text-vxaAccent">
+                            <i class="fas fa-chart-pie text-xl"></i>
+                        </div>
+                        <div class="mt-5">
+                            <h3 class="text-lg font-medium text-white">Advanced Trading Tools</h3>
+                            <p class="mt-2 text-base text-gray-400">
+                                Professional charting, algorithmic trading, and customizable interfaces for serious traders.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-gray-900 p-8 rounded-xl transition-all duration-300">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-green-500/10 text-green-500">
+                            <i class="fas fa-percentage text-xl"></i>
+                        </div>
+                        <div class="mt-5">
+                            <h3 class="text-lg font-medium text-white">Competitive Fees</h3>
+                            <p class="mt-2 text-base text-gray-400">
+                                Industry-low trading fees with additional discounts for high-volume traders and market makers.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-gray-900 p-8 rounded-xl transition-all duration-300">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-yellow-500/10 text-yellow-500">
+                            <i class="fas fa-headset text-xl"></i>
+                        </div>
+                        <div class="mt-5">
+                            <h3 class="text-lg font-medium text-white">24/7 Support</h3>
+                            <p class="mt-2 text-base text-gray-400">
+                                Dedicated support team available around the clock to assist with any issues or questions.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-gray-900 p-8 rounded-xl transition-all duration-300">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-red-500/10 text-red-500">
+                            <i class="fas fa-shield-virus text-xl"></i>
+                        </div>
+                        <div class="mt-5">
+                            <h3 class="text-lg font-medium text-white">Insurance Fund</h3>
+                            <p class="mt-2 text-base text-gray-400">
+                                $250M insurance fund to protect user assets in the unlikely event of a security breach.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Benefits Section -->
+    <div class="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-vxaDark to-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="text-base text-vxaBlue font-semibold tracking-wide uppercase">New Benefits</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">
+                    Exclusive New Rewards Program
+                </p>
+                <p class="mt-4 max-w-2xl text-xl text-gray-400 lg:mx-auto">
+                    We've launched exciting new benefits for our community of traders.
+                </p>
+            </div>
+            
+            <div class="mt-16">
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div class="w-full border-t border-gray-800"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                        <span class="px-3 bg-gray-900 text-lg font-medium text-white">
+                          Benefits
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="bg-gray-900 rounded-xl p-6 glow border border-gray-800">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-vxaBlue/10 rounded-lg p-3">
+                                <i class="fas fa-gift text-vxaBlue text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-white">Sign-Up Bonus</h3>
+                                <p class="mt-1 text-gray-400">Get $10 in VXA tokens when you sign up and complete KYC.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-900 rounded-xl p-6 glow border border-gray-800">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-vxaPurple/10 rounded-lg p-3">
+                                <i class="fas fa-hand-holding-usd text-vxaPurple text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-white">Zero Maker Fees</h3>
+                                <p class="mt-1 text-gray-400">0% fees for market makers on all trading pairs for 30 days.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-900 rounded-xl p-6 glow border border-gray-800">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-vxaAccent/10 rounded-lg p-3">
+                                <i class="fas fa-users text-vxaAccent text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-white">Referral Program</h3>
+                                <p class="mt-1 text-gray-400">Earn 40% of trading fees from friends you refer for life.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-900 rounded-xl p-6 glow border border-gray-800">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-green-500/10 rounded-lg p-3">
+                                <i class="fas fa-coins text-green-500 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-white">Staking Rewards</h3>
+                                <p class="mt-1 text-gray-400">Earn up to 15% APY when you stake VXA tokens.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-900 rounded-xl p-6 glow border border-gray-800">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-yellow-500/10 rounded-lg p-3">
+                                <i class="fas fa-trophy text-yellow-500 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-white">Trading Competitions</h3>
+                                <p class="mt-1 text-gray-400">Compete for $100,000 in prize pools every month.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-900 rounded-xl p-6 glow border border-gray-800">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-red-500/10 rounded-lg p-3">
+                                <i class="fas fa-bolt text-red-500 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-white">VIP Program</h3>
+                                <p class="mt-1 text-gray-400">Exclusive benefits for high-volume traders including lower fees.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 text-center">
+                    <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-vxaBlue hover:bg-blue-700">
+                        View All Benefits
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Tokens Section -->
+    <div class="py-12 sm:py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="text-base text-vxaBlue font-semibold tracking-wide uppercase">Markets</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">
+                    Top Traded Assets
+                </p>
+                <p class="mt-4 max-w-2xl text-xl text-gray-400 lg:mx-auto">
+                    Trade with deep liquidity across hundreds of digital assets.
+                </p>
+            </div>
+            
+            <div class="mt-10">
+                <div class="overflow-x-auto">
+                    <div class="inline-block min-w-full align-middle">
+                        <div class="overflow-hidden shadow-sm rounded-lg">
+                            <table class="min-w-full divide-y divide-gray-800">
+                                <thead class="bg-gray-800">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Asset</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Price</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">24h Change</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">24h Volume</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Market Cap</th>
+                                        <th scope="col" class="relative px-6 py-3">
+                                            <span class="sr-only">Trade</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-gray-900 divide-y divide-gray-800">
+                                    <tr class="hover:bg-gray-800/50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full" src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="BTC">
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-white">Bitcoin</div>
+                                                    <div class="text-sm text-gray-400">BTC</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-white">$42,876.23</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-900 text-green-100">
+                                                +2.34%
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">$1.24B</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">$820.5B</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <a href="#" class="text-vxaBlue hover:text-blue-400">Trade</a>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="hover:bg-gray-800/50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full" src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="ETH">
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-white">Ethereum</div>
+                                                    <div class="text-sm text-gray-400">ETH</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-white">$2,345.67</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-900 text-green-100">
+                                                +1.78%
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">$890.2M</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">$282.3B</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <a href="#" class="text-vxaBlue hover:text-blue-400">Trade</a>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="hover:bg-gray-800/50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full" src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT">
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-white">Tether</div>
+                                                    <div class="text-sm text-gray-400">USDT</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-white">$1.00</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-700 text-gray-100">
+                                                0.00%
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">$3.45B</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">$83.7B</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <a href="#" class="text-vxaBlue hover:text-blue-400">Trade</a>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="hover:bg-gray-800/50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full" src="https://cryptologos.cc/logos/bnb-bnb-logo.png" alt="BNB">
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-white">BNB</div>
+                                                    <div class="text-sm text-gray-400">BNB</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-white">$312.45</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-900 text-red-100">
+                                                -0.56%
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">$450.3M</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">$48.2B</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <a href="#" class="text-vxaBlue hover:text-blue-400">Trade</a>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="hover:bg-gray-800/50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full" src="https://cryptologos.cc/logos/solana-sol-logo.png" alt="SOL">
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-white">Solana</div>
+                                                    <div class="text-sm text-gray-400">SOL</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-white">$98.76</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-900 text-green-100">
+                                                +5.23%
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">$320.1M</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">$42.8B</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <a href="#" class="text-vxaBlue hover:text-blue-400">Trade</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <a href="#" class="text-vxaBlue hover:text-blue-400 font-medium">
+                        View All Markets
+                        <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="relative bg-vxaDark">
+        <div class="absolute inset-0 -z-10">
+            <div class="absolute inset-0 bg-[radial-gradient(#7B61FF_1px,transparent_1px)] [background-size:16px_16px] opacity-10"></div>
+            <div class="absolute left-[30%] top-[20%] h-[400px] w-[400px] rounded-full bg-vxaPurple opacity-20 blur-[100px]"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-24 lg:px-8 lg:flex lg:items-center lg:justify-between">
+            <div class="text-center lg:text-left">
+                <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+                    <span class="block">Ready to start trading?</span>
+                    <span class="block gradient-text">Join VXA Velaxa today.</span>
+                </h2>
+                <p class="mt-3 max-w-3xl text-lg text-gray-400">
+                    Sign up now and take advantage of our new benefits program with exclusive rewards.
+                </p>
+            </div>
+            <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0 justify-center lg:justify-end">
+                <div class="inline-flex rounded-md shadow">
+                    <a href="#" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-vxaBlue hover:bg-blue-700">
+                        Get Started
+                    </a>
+                </div>
+                <div class="ml-3 inline-flex rounded-md shadow">
+                    <a href="#" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-vxaBlue bg-white hover:bg-gray-50">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+            <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+                <div class="space-y-8 xl:col-span-1">
+                    <div class="flex items-center">
+                        <div class="h-10 w-10 rounded-full gradient-bg flex items-center justify-center">
+                            <span class="font-bold text-white">VXA</span>
+                        </div>
+                        <span class="ml-2 text-xl font-bold">Velaxa</span>
+                    </div>
+                    <p class="text-gray-400 text-base">
+                        The next-generation digital asset exchange built for performance, security, and institutional-grade reliability.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-telegram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-discord text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-medium text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
+                                Products
+                            </h3>
+                            <ul class="mt-4 space-y-4">
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">
+                                        Exchange
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">
+                                        Derivatives
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">
+                                        Margin Trading
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">
+                                        API
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-12 md:mt-0">
+                            <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
+                                Services
+                            </h3>
+                            <ul class="mt-4 space-y-4">
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">
+                                        Staking
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">
+                                        VXA Launchpad
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">
+                                        Institutional Services
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">
+                                        OTC Trading
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
+                                Support
+                            </h3>
+                            <ul class="mt-4 space-y-4">
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">
+                                        Help Center
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">
+                                        Fees
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">
+                                        Status
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">
+                                        Contact Us
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-12 md:mt-0">
+                            <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
+                                Company
+                            </h3>
+                            <ul class="mt-4 space-y-4">
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">
+                                        About
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">
+                                        Careers
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">
+                                        Blog
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">
+                                        Press
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-gray-800 pt-8">
+                <p class="text-base text-gray-400 text-center">
+                    &copy; 2023 VXA Velaxa Exchange. All rights reserved.
+                </p>
+                <div class="mt-4 flex justify-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Terms</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Cookies</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Legal</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Token price animation
+        const btcPriceElement = document.querySelector('tbody tr:first-child td:nth-child(2) .text-sm');
+        let btcPrice = 42876.23;
+        
+        setInterval(() => {
+            // Simulate small price fluctuations
+            const change = (Math.random() - 0.5) * 100;
+            btcPrice = Math.max(42000, Math.min(44000, btcPrice + change));
+            
+            // Update price display
+            btcPriceElement.textContent = '$' + btcPrice.toFixed(2);
+            
+            // Update change indicator
+            const changeElement = document.querySelector('tbody tr:first-child td:nth-child(3) span');
+            const changePercent = (change / (btcPrice - change) * 100).toFixed(2);
+            
+            if (change >= 0) {
+                changeElement.textContent = '+' + changePercent + '%';
+                changeElement.classList.remove('bg-red-900', 'text-red-100');
+                changeElement.classList.add('bg-green-900', 'text-green-100');
+            } else {
+                changeElement.textContent = changePercent + '%';
+                changeElement.classList.remove('bg-green-900', 'text-green-100');
+                changeElement.classList.add('bg-red-900', 'text-red-100');
+            }
+        }, 3000);
+
+        // Animate feature cards on scroll
+        const featureCards = document.querySelectorAll('.feature-card');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        featureCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = `all 0.5s ease ${index * 0.1}s`;
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
